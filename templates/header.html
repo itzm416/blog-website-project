@@ -1,0 +1,80 @@
+<header style="background-color: white;" class="p-2">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start py-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'dashboard' %}" class="nav-link px-2 link-dark">Dashboard</a></li>
+        {% endif %}
+        <li><a href="{% url 'blog' %}" class="nav-link px-2 link-dark">Blog</a></li>
+        <li><a href="{% url 'latestblog' %}" class="nav-link px-2 link-dark">Latest</a></li>
+
+        <li>
+
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle link-dark" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Category
+            </a>
+            <ul class="dropdown-menu">
+
+              {% for i in category %}
+
+              <li><a class="dropdown-item" href="{% url 'blogcategory' i.slug %}">{{i.title}}</a></li>
+
+              {% endfor %}
+
+            </ul>
+          </div>
+
+        </li>
+
+        <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">About</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <form method="get" action="{% url 'searchblog' %}" class="w-100 me-3" role="search">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="query">
+        </form>
+
+
+        <div class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {% if request.user.profile.profile_image %}
+            <img src="/media/{{request.user.profile.profile_image}}" alt="mdo" width="32" height="32"
+              class="rounded-circle">
+            {% else %}
+            <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+              alt="mdo" width="32" height="32" class="rounded-circle">
+            {% endif %}
+          </a>
+
+          <ul class="dropdown-menu text-small shadow">
+            {% if request.user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'p' %}">Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 's' %}">Sign In</a></li>
+            <li><a class="dropdown-item" href="{% url 'l' %}">Login</a></li>
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>

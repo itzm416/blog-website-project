@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Blog {% endblock %}
+
+{% block content %}
+
+<style>
+    .django-ckeditor-widget {
+        display: inline !important;
+    }
+</style>
+
+<h2 class="mt-4" style="font-family: 'Mochiy Pop P One', sans-serif; text-align: center;">Write Your Blog here...</h2>
+
+<div class="container mb-5">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Title</label>
+            {{form.title}}
+        </div>
+        <div class="mb-3 container">
+            {{form.content}}
+            {{form.media}}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Select Category</label>
+            {{form.category}}
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Image</label>
+            {{form.image}}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock %}

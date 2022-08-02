@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %} Read Blog {% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Title - {{blog.title}}</h1>
+    <div class="container-fluid mt-3 mb-4 p-0">
+        <span>Author - <a href="{% url 'authorprofile' blog.author %}">{{blog.author}}</a></span>
+
+        <span> - {{blog.add_date}}</span>
+    </div>
+    <hr>
+    {{blog.content | safe}}
+
+</div>
+
+
+<div class="container bg-dark text-secondary px-4 py-1 mb-5 text-center mt-5">
+    <div>
+        <h1 class="display-6 fw-bold text-white">Comments</h1>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+
+    <form action="{% url 'comment' blog.slug %}" method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
+            <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" required rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-0">Submit</button>
+    </form>
+
+</div>
+
+
+<div class="container">
+
+    {% for i in comment %}
+
+    {% if i.post.title == blog.title %}
+
+    <p class="mb-0 mx-0">
+
+        <span class="mx-3">
+            <form action="{% url 'deletecomment' blog.slug %}" method="post">
+                {% csrf_token %}
+
+
+                {% if i.author.profile.profile_image %}
+                <img src="/media/{{i.author.profile.profile_image}}" alt="mdo" width="32" height="32"
+                    class="rounded-circle">
+                {% else %}
+                <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                    alt="mdo" width="32" height="32" class="rounded-circle">
+                {% endif %}
+
+                <span class="mx-3">
+                    {{i.author}}
+                </span>
+                {% if request.user == i.author %}
+                <button class="btn btn-light text-danger btn-sm px-1">Delete</button>
+                {% endif %}
+                <input type="hidden" id="custId" name="id" value="{{i.id}}">
+            </form>
+        </span>
+
+    </p>
+
+    <p class="mb-0 mx-5">
+        {{i.content}}
+    </p>
+
+    <p class="mb-0 mx-5">
+        {{i.add_date}}
+    </p>
+
+    <div class="container px-0 mt-0">
+
+        <p>
+            <a class="text-decoration-none mx-5 px-0" data-bs-toggle="collapse" href="#replyBox{{i.id}}" role="button"
+                aria-expanded="false" aria-controls="replyBox{{i.id}}">
+                View Reply
+            </a>
+
+        </p>
+
+        <div class="collapse" id="replyBox{{i.id}}">
+
+            {% for j in subcomment %}
+
+            {% if j.reply == i %}
+
+            <div class="card card-body border border-0 p-0 mx-5">
+
+                <p class="mb-0 mx-0">
+                    <span class="mx-3">
+
+                        <form action="{% url 'subdeletecomment' blog.slug %}" method="post">
+                            {% csrf_token %}
+
+                            {% if j.author.profile.profile_image %}
+                            <img src="/media/{{j.author.profile.profile_image}}" alt="mdo" width="32" height="32"
+                                class="rounded-circle">
+                            {% else %}
+                            <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                                alt="mdo" width="32" height="32" class="rounded-circle">
+                            {% endif %}
+
+                            <span class="mx-3">
+                                {{j.author}}
+                            </span>
+                            {% if request.user == j.author %}
+                            <button class="btn btn-light text-danger btn-sm px-1">Delete</button>
+                            {% endif %}
+                            <input type="hidden" id="custId" name="id" value="{{j.id}}">
+                        </form>
+                    </span>
+                </p class="mb-0 mx-5">
+
+                <p class="mb-0 mx-5">
+                    {{j.content}}
+                </p>
+                <p class="mb-0 mx-5">
+                    {{j.add_date}}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="container mx-1 px-5 p-2 mb-4">
+
+        <form action="{% url 'subcomment' blog.slug %}" method="post">
+            {% csrf_token %}
+
+            <div class="mb-3 mt-5">
+                <input type="hidden" id="custId" name="id" value="{{i.id}}">
+                <textarea class="form-control" name="subcomment" id="exampleFormControlTextarea1" required rows="3"
+                    placeholder="reply"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Reply</button>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

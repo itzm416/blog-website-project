@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %} Latest Blog {% endblock %}
+
+{% block content %}
+
+{% if blogs %}
+
+<div class="container bg-dark text-secondary px-4 py-1 mb-5 text-center">
+  <div>
+    <h1 class="display-6 fw-bold text-white">Latest Blogs</h1>
+  </div>
+</div>
+
+<section id="gallery">
+  <div class="container">
+    <div class="row">
+      {% for i in blogs %}
+      <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+        <div class="card border-0 border-bottom ">
+          <img style=" width: 100%;height: 30vw;object-fit: cover;" src="/media/{{i.image}}" alt=""
+            class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{i.title | truncatechars:200}}</h5>
+            <p>
+              {{i.add_date}}
+            </p>
+            <a href="{% url 'read' i.slug %}" class="btn btn-outline-success btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+{% else %}
+
+<div class="container">
+  <h1>Currenty there is no blogs.......</h1>
+</div>
+
+{% endif %}
+
+{% endblock %}

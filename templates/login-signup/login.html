@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+  
+  <div id="intro" class="bg-image shadow-2-strong mt-2" style="margin-bottom: 68px;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form method="post" class="bg-white border shadow p-4 mb-5 bg-body rounded">
+                <h3 class="mb-3 text-center" style="font-family: 'Mochiy Pop P One', sans-serif;">Login</h3>
+                <!-- Email input -->
+              {% csrf_token %}
+              <div class="form-outline mb-4">
+                  <label class="form-label" for="form1Example1">Username</label>
+                  {{form.username}}
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-3">
+                  <label class="form-label" for="form1Example2">Password</label>
+                {{form.password}}
+              </div>
+
+              <!-- 2 column grid layout for inline styling -->  
+              <div class="row mb-2">
+                  <small class="text-danger mt-2">{{form.non_field_errors}}</small>
+                  <small class="mb-4 mt-1">Do not have an account ? <a class="text-decoration-none" href="{% url 's' %}">Signup</a></small>
+                  <small class="mb-4"><a class="text-decoration-none text-danger" href="{% url 'send-email' %}">Forgot Password ?</a></small>              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>        
+ 
+{% endblock %}

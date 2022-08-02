@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Email Already Verified {% endblock %}
+
+{% block content %}
+
+<div id="intro" class="bg-image shadow-2-strong" style="margin-top: 6.8rem!important; margin-bottom: 266px;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form method="post" class="bg-white border shadow p-4 mb-5 bg-body rounded mt-4">
+                <div class="form-outline mb-4 mt-4 text-center">
+                  <h3 class="mb-3 text-center" style="font-family: 'Mochiy Pop P One', sans-serif;">Email Already Varified !</h3>
+              </div>
+              <div class="container text-center">
+                <a class="btn btn-primary" href="{% url 'l' %}" role="button">Back to login</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>   
+
+{% endblock %}
