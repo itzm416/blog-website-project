@@ -1,7 +1,6 @@
 # Blog Website Project
 
-Built a Youtube Clone Where user can create watch and create video. A user can create his/her channel, subscribe to other users channel, like or dislike videos
-
+Built a Blog Website where user can create blogs and can share information. A user can share his/her ideas and read blogs of different category.
 
 ## Installation
 
